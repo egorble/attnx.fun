@@ -92,49 +92,57 @@ export default function App() {
           {/* Cards Container */}
           <div className="relative w-full max-w-[320px] aspect-[3/4] [transform-style:preserve-3d] group">
             
-            {/* Card 3 (Back left) - Cursor */}
+            {/* Card 3 (Back left) - Lovable */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#050507]/90 to-[#050507]/40 backdrop-blur-md rounded-[32px] border border-white/[0.15] p-6 transform -rotate-12 -translate-x-20 translate-y-8 scale-90 shadow-2xl transition-all duration-500 flex flex-col group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-100 cursor-pointer">
               <div className="flex justify-between items-start mb-auto">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-black font-bold text-2xl">C</span>
+                <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-2xl">L</span>
                 </div>
-                <span className="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider border border-blue-500/20 uppercase">Rare</span>
+                <span className="bg-[#A855F7]/20 text-[#A855F7] px-3 py-1 rounded-full text-[10px] font-bold tracking-wider border border-[#A855F7]/30 uppercase">Legendary</span>
               </div>
               <div className="mt-auto">
-                <h3 className="text-2xl font-bold mb-1">Cursor</h3>
-                <p className="text-gray-400 text-sm mb-6">AI Code Editor</p>
+                <h3 className="text-2xl font-bold mb-1">Lovable</h3>
+                <p className="text-gray-400 text-sm mb-6">AI Software Engineer · W24</p>
                 <div className="space-y-3 bg-black/20 p-4 rounded-2xl border border-white/5">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Hype Score</span>
-                    <span className="font-bold text-white">88/100</span>
+                    <span className="text-gray-500">Valuation</span>
+                    <span className="font-bold text-white">$6.6B</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Weekly Vol</span>
-                    <span className="font-bold text-[#A855F7]">+142%</span>
+                    <span className="text-gray-500">Hype Score</span>
+                    <span className="font-bold text-white">96/100</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Weekly Change</span>
+                    <span className="font-bold text-[#A855F7]">+18.5%</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Card 2 (Back right) - Claude */}
+            {/* Card 2 (Back right) - Cursor */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#050507]/90 to-[#050507]/40 backdrop-blur-md rounded-[32px] border border-white/[0.15] p-6 transform rotate-12 translate-x-20 translate-y-4 scale-95 shadow-2xl transition-all duration-500 flex flex-col group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-100 cursor-pointer">
               <div className="flex justify-between items-start mb-auto">
-                <div className="w-12 h-12 bg-[#D97757] rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-white font-serif italic font-bold text-2xl">C</span>
+                <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center shadow-lg border border-white/20">
+                  <span className="text-white font-bold text-2xl">C</span>
                 </div>
-                <span className="bg-purple-500/10 text-purple-400 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider border border-purple-500/20 uppercase">Epic</span>
+                <span className="bg-[#A855F7]/20 text-[#A855F7] px-3 py-1 rounded-full text-[10px] font-bold tracking-wider border border-[#A855F7]/30 uppercase">Legendary</span>
               </div>
               <div className="mt-auto">
-                <h3 className="text-2xl font-bold mb-1">Anthropic</h3>
-                <p className="text-gray-400 text-sm mb-6">Claude 3.5 Sonnet</p>
+                <h3 className="text-2xl font-bold mb-1">Cursor</h3>
+                <p className="text-gray-400 text-sm mb-6">AI-first Code Editor · S23</p>
                 <div className="space-y-3 bg-black/20 p-4 rounded-2xl border border-white/5">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Hype Score</span>
-                    <span className="font-bold text-white">94/100</span>
+                    <span className="text-gray-500">Valuation</span>
+                    <span className="font-bold text-white">$29.3B</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Weekly Vol</span>
-                    <span className="font-bold text-[#A855F7]">+215%</span>
+                    <span className="text-gray-500">Hype Score</span>
+                    <span className="font-bold text-white">98/100</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">Weekly Change</span>
+                    <span className="font-bold text-[#A855F7]">+25.2%</span>
                   </div>
                 </div>
               </div>
@@ -145,31 +153,31 @@ export default function App() {
               <div className="flex justify-between items-start mb-auto">
                 <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-lg">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1816a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A6.0651 6.0651 0 0 0 19.02 19.8184a5.9847 5.9847 0 0 0 3.9977-2.9001 6.051 6.051 0 0 0-.7358-7.0972Zm-8.6521 6.9208c-1.6092 1.085-3.7644 1.1136-5.4053.071l-1.071-.6778 3.165-5.4822h6.33l-1.071 1.8552c-.628 1.085-1.782 1.7536-3.0477 1.7536v2.48ZM7.443 14.542l-1.071.6778a4.571 4.571 0 0 1-2.2748.6019 4.59 4.59 0 0 1-3.9645-2.289 4.571 4.571 0 0 1 .071-4.6398l1.071-1.8552 3.165 5.4822v1.3556c0 1.256.6682 2.4147 1.7535 3.043l-1.7535-2.3765Zm-1.8245-8.2133a4.571 4.571 0 0 1 2.2038-4.0355 4.59 4.59 0 0 1 4.571-.071l1.071.6778-3.165 5.4822H4.0692l1.071-1.8552a4.571 4.571 0 0 1 .4783-.1983ZM16.557 9.458l1.071-.6778a4.571 4.571 0 0 1 2.2748-.6019 4.59 4.59 0 0 1 3.9645 2.289 4.571 4.571 0 0 1-.071 4.6398l-1.071 1.8552-3.165-5.4822V10.122c0-1.256-.6682-2.4147-1.7535-3.043l1.7535 2.379Zm1.8245 8.2133a4.571 4.571 0 0 1-2.2038 4.0355 4.59 4.59 0 0 1-4.571.071l-1.071-.6778 3.165-5.4822h6.2302l-1.071 1.8552a4.571 4.571 0 0 1-.4783.1983ZM12 14.25a2.25 2.25 0 1 1 0-4.5 2.25 2.25 0 0 1 0 4.5Z" fill="#000"/>
+                    <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1816a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A6.0651 6.0651 0 0 0 19.02 19.8184a5.9847 5.9847 0 0 0 3.9977-2.9001 6.051 6.051 0 0 0-.7358-7.0972Z" fill="#000"/>
                   </svg>
                 </div>
                 <span className="bg-[#A855F7]/20 text-[#A855F7] px-3 py-1 rounded-full text-[10px] font-bold tracking-wider border border-[#A855F7]/30 uppercase">Legendary</span>
               </div>
-              
+
               <div className="mt-auto">
                 <h3 className="text-3xl font-bold mb-1">OpenAI</h3>
-                <p className="text-gray-400 text-sm mb-6">AGI Research Lab</p>
-                
+                <p className="text-gray-400 text-sm mb-6">Leading AI Research Lab · S15</p>
+
                 <div className="space-y-3 bg-black/40 p-5 rounded-2xl border border-white/5 mb-6">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Valuation</span>
-                    <span className="font-bold text-white">$86.0B</span>
+                    <span className="font-bold text-white">$300B+</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Hype Score</span>
-                    <span className="font-bold text-white">99/100</span>
+                    <span className="font-bold text-white">100/100</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Weekly Vol</span>
-                    <span className="font-bold text-[#A855F7]">+450%</span>
+                    <span className="text-gray-500">Weekly Change</span>
+                    <span className="font-bold text-[#A855F7]">+45.0%</span>
                   </div>
                 </div>
-                
+
                 <button className="w-full bg-[#A855F7] hover:bg-[#9333EA] text-white py-3.5 rounded-xl font-bold transition-colors shadow-[0_0_20px_rgba(168,85,247,0.3)] text-sm">
                   Trade Card
                 </button>
