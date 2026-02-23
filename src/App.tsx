@@ -214,10 +214,10 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <main id="hero" className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-14 sm:pt-20 pb-20 sm:pb-6 min-h-[100dvh] flex flex-col justify-between lg:grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-12 lg:items-end relative z-10">
+      <main id="hero" className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-20 sm:pt-20 pb-12 sm:pb-6 min-h-[100dvh] flex flex-col lg:grid lg:grid-cols-2 gap-8 sm:gap-6 lg:gap-12 lg:items-end relative z-10">
         <div className="absolute top-0 left-[-10%] w-[40%] h-[80%] rounded-full bg-[#A855F7]/8 blur-[100px] md:blur-[150px] pointer-events-none"></div>
         {/* Left Column */}
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-4 sm:space-y-6 shrink-0 mt-4 sm:mt-0">
           {/* Trust Badge — hidden on mobile */}
           <div className="hidden sm:inline-flex items-center gap-3 bg-white/[0.03] backdrop-blur-xl p-1.5 pr-5 rounded-xl border border-white/[0.08] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)]">
             <div className="bg-white text-black px-4 py-1.5 rounded-lg text-xs font-bold">
@@ -246,7 +246,7 @@ export default function App() {
           </p>
 
           {/* Button */}
-          <div>
+          <div className="pt-2 sm:pt-0">
             <button onClick={() => scrollTo('waitlist')} className="group relative inline-flex items-center gap-3 bg-white text-black px-7 sm:px-8 py-3 sm:py-3.5 rounded-2xl font-bold text-sm sm:text-base overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:scale-[1.03] cursor-pointer">
               <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-[-4px]">Join the Waitlist</span>
               <svg className="relative z-10 w-5 h-5 transition-all duration-300 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
@@ -256,7 +256,7 @@ export default function App() {
         </div>
 
         {/* Right Column - Cards */}
-        <div className="flex relative h-[260px] sm:h-[360px] lg:h-[560px] items-start sm:items-end justify-center [perspective:2000px]">
+        <div className="flex-1 flex relative mt-8 sm:mt-0 min-h-[300px] sm:min-h-[360px] lg:min-h-[560px] items-center sm:items-end justify-center [perspective:2000px]">
           {/* Background Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[350px] lg:w-[450px] h-[280px] sm:h-[350px] lg:h-[450px] bg-[#A855F7]/10 blur-[80px] sm:blur-[100px] lg:blur-[120px] rounded-full pointer-events-none"></div>
 
