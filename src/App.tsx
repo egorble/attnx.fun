@@ -362,7 +362,11 @@ export default function App() {
                       disable-pan="true"
                       interaction-prompt="none"
                       style={{ width: '100%', height: '100%', backgroundColor: 'transparent', outline: 'none' }}
-                    ></model-viewer>
+                    >
+                      <div slot="poster" className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-[250px] sm:w-[350px] h-[250px] sm:h-[350px] rounded-full bg-[#A855F7]/30 blur-[100px] animate-[pulse_3s_ease-in-out_infinite]"></div>
+                      </div>
+                    </model-viewer>
                   </div>
                 </div>
               </div>
