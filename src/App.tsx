@@ -89,6 +89,31 @@ export default function App() {
   useEffect(() => { updateDot(); }, [updateDot]);
   useEffect(() => { window.addEventListener('resize', updateDot); return () => window.removeEventListener('resize', updateDot); }, [updateDot]);
 
+  // How It Works scroll tracker
+  const howItWorksRef = useRef<HTMLElement>(null);
+  const scrollTrackerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!howItWorksRef.current || !scrollTrackerRef.current) return;
+      const rect = howItWorksRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const startOffset = windowHeight * 0.7;
+      const scrollableDistance = rect.height;
+
+      let scrolled = startOffset - rect.top;
+      let progress = (scrolled / scrollableDistance) * 100;
+      progress = Math.max(0, Math.min(100, progress));
+
+      scrollTrackerRef.current.style.top = `${progress}%`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Scroll spy — detect which section is in view
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -278,52 +303,140 @@ export default function App() {
 
       {/* Features Section — hidden for now */}
 
-      {/* How it Works Section */}
-      <section id="how-it-works" className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-20 sm:pt-32 pb-24 sm:pb-40 relative z-10 scroll-mt-24">
-        <div className="absolute top-0 left-[20%] w-[60%] h-[100%] rounded-full bg-purple-600/5 blur-[100px] md:blur-[150px] pointer-events-none"></div>
-        <div className="text-center mb-16 sm:mb-20 relative z-10">
-          <p className="text-gray-500 text-xs sm:text-sm font-medium uppercase tracking-[0.2em] mb-4">Getting Started</p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">How Attention<span className="text-[#A855F7]">X</span> Works</h2>
-          <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-            Collect cards of YC startups, join leagues, and compete to win the prize pool on the Rise blockchain.
-          </p>
+      {/* How it Works Section - Redesigned & Animated */}
+      <section id="how-it-works" ref={howItWorksRef} className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-24 sm:pb-40 relative z-10 scroll-mt-24 overflow-hidden">
+        {/* Animated Background Orbs */}
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[#A855F7]/10 blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-[#A855F7]/10 blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }}></div>
+
+        <div className="text-center mb-20 md:mb-32 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-6 backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#A855F7] animate-ping"></span>
+            <p className="text-gray-300 text-xs sm:text-sm font-bold uppercase tracking-widest">The Process</p>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">How it <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A855F7] to-[#DFB9FF]">Works</span></h2>
         </div>
 
-        <div className="grid gap-10 sm:gap-12 md:grid-cols-3 relative">
-          {/* Connecting Line */}
-          <div className="hidden md:block absolute top-10 left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-y-1/2 z-0"></div>
-
-          {/* Step 1 */}
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="w-20 h-20 rounded-full bg-[#050507] border border-white/20 flex items-center justify-center text-3xl font-bold text-white/70 mb-8 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-              1
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4">Buy a Pack</h3>
-            <p className="text-gray-400 leading-relaxed text-base sm:text-lg max-w-xs">
-              Purchase a starter pack containing 5 random YC startup cards to begin.
-            </p>
+        <div className="relative max-w-5xl mx-auto z-10">
+          {/* Animated Vertical Line (Desktop) */}
+          <div className="hidden md:block absolute top-[10%] bottom-[10%] left-1/2 -ml-[1px] w-[2px] bg-gradient-to-b from-transparent via-white/10 to-transparent">
+            {/* Moving Tracker on the line */}
+            <div ref={scrollTrackerRef} className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-32 bg-gradient-to-b from-transparent via-[#A855F7] to-transparent transition-all duration-75 ease-linear"></div>
           </div>
 
-          {/* Step 2 */}
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="w-20 h-20 rounded-full bg-[#050507] border border-white/20 flex items-center justify-center text-3xl font-bold text-white/70 mb-8 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-              2
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4">Join Leagues</h3>
-            <p className="text-gray-400 leading-relaxed text-base sm:text-lg max-w-xs">
-              Enter weekly leagues with your best cards. Compete based on real-world startup traction.
-            </p>
-          </div>
+          <div className="space-y-16 md:space-y-24">
+            {/* Step 1 */}
+            <div className="relative flex flex-col md:flex-row items-center justify-between group">
+              {/* Connector Dot */}
+              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#050507] border-2 border-[#A855F7]/40 items-center justify-center z-20 group-hover:border-[#A855F7] transition-all duration-500 group-hover:shadow-[0_0_20px_#A855F7]">
+                <div className="w-2 h-2 rounded-full bg-[#A855F7] group-hover:scale-150 transition-transform duration-500"></div>
+              </div>
 
-          {/* Step 3 */}
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="w-20 h-20 rounded-full bg-[#050507] border border-white/20 flex items-center justify-center text-3xl font-bold text-white/70 mb-8 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-              3
+              {/* Text Right, Box Left on Desktop */}
+              <div className="w-full md:w-[45%] flex justify-end mb-8 md:mb-0 order-2 md:order-1 px-4 md:px-0">
+                <div className="md:pr-12 text-center md:text-right w-full">
+                  <div className="inline-block text-8xl font-black text-white/[0.03] -mb-8 select-none">01</div>
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#A855F7] transition-all duration-300">Assemble Your Portfolio</h3>
+                  <p className="text-gray-400 leading-relaxed text-base sm:text-lg">
+                    Purchase a starter pack containing 5 random YC startup cards. Will you pull the next unicorn?
+                  </p>
+                </div>
+              </div>
+
+              {/* Visual Card - Free Floating 3D Pack */}
+              <div className="w-full md:w-[45%] order-1 md:order-2 px-4 md:px-0 flex justify-center md:justify-start">
+                <div className="relative w-full max-w-sm h-[200px] sm:h-[300px] flex items-center justify-center group-hover:scale-[1.05] transition-transform duration-500 overflow-visible">
+                  <div className="relative w-[500px] h-[600px] scale-[0.45] sm:scale-[0.55] z-20 flex items-center justify-center animate-[float_6s_ease-in-out_infinite]">
+                    {/* @ts-ignore */}
+                    <model-viewer
+                      src="/card-pack.glb"
+                      environment-image="/env-city.hdr"
+                      auto-rotate="true"
+                      rotation-per-second="20deg"
+                      camera-controls="true"
+                      shadow-intensity="0"
+                      exposure="1.1"
+                      camera-orbit="0deg 75deg 7m"
+                      field-of-view="25deg"
+                      disable-zoom="true"
+                      disable-pan="true"
+                      interaction-prompt="none"
+                      style={{ width: '100%', height: '100%', backgroundColor: 'transparent', outline: 'none' }}
+                    ></model-viewer>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4">Win on Rise</h3>
-            <p className="text-gray-400 leading-relaxed text-base sm:text-lg max-w-xs">
-              Top the leaderboard and claim your share of the ETH prize pool — instant, on-chain.
-            </p>
+
+            {/* Step 2 */}
+            <div className="relative flex flex-col md:flex-row items-center justify-between group">
+              {/* Connector Dot */}
+              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#050507] border-2 border-[#A855F7]/40 items-center justify-center z-20 group-hover:border-[#A855F7] transition-all duration-500 group-hover:shadow-[0_0_20px_#A855F7]">
+                <div className="w-2 h-2 rounded-full bg-[#A855F7] group-hover:scale-150 transition-transform duration-500"></div>
+              </div>
+
+              {/* Visual Card Left */}
+              <div className="w-full md:w-[45%] order-1 md:order-1 px-4 md:px-0 flex justify-center md:justify-end">
+                <div className="relative w-full max-w-sm aspect-video rounded-3xl p-[1px] overflow-hidden group-hover:scale-[1.02] transition-transform duration-500">
+                  <div className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent_0_340deg,#A855F7_360deg)] animate-[spin_4s_linear_infinite_reverse] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-[1px] bg-[#0A0A0E] rounded-[23px] z-10"></div>
+                  <div className="relative z-20 w-full h-full p-4 lg:p-8 border border-white/5 rounded-3xl bg-gradient-to-br from-white/[0.03] to-transparent flex items-center justify-center backdrop-blur-sm overflow-hidden min-h-[200px]">
+                    <div className="flex -space-x-8 sm:-space-x-4 animate-[float_5s_ease-in-out_infinite] items-center justify-center perspective-[1000px]">
+                      <img src="/images/anthropic.png" alt="Anthropic" className="w-14 sm:w-16 h-20 sm:h-24 object-cover rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.8)] border border-white/10 -rotate-12 translate-y-4" />
+                      <img src="/images/cursor.png" alt="Cursor" className="w-16 sm:w-20 h-24 sm:h-28 object-cover rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.8)] border border-[#A855F7]/30 -rotate-6 translate-y-1 z-10" />
+                      <img src="/images/openai.png" alt="OpenAI" className="w-20 sm:w-24 h-28 sm:h-32 object-cover rounded-xl shadow-[0_0_40px_rgba(168,85,247,0.4)] border border-[#A855F7] z-20 backdrop-blur-md" />
+                      <img src="/images/lovable.png" alt="Lovable" className="w-16 sm:w-20 h-24 sm:h-28 object-cover rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.8)] border border-[#A855F7]/30 rotate-6 translate-y-1 z-10" />
+                      <img src="/images/browseruse.png" alt="BrowserBase" className="w-14 sm:w-16 h-20 sm:h-24 object-cover rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.8)] border border-white/10 rotate-12 translate-y-4" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Right */}
+              <div className="w-full md:w-[45%] flex justify-start mt-8 md:mt-0 order-2 md:order-2 px-4 md:px-0">
+                <div className="md:pl-12 text-center md:text-left w-full">
+                  <div className="inline-block text-8xl font-black text-white/[0.03] -mb-8 select-none">02</div>
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#A855F7] transition-all duration-300">Enter the Arena</h3>
+                  <p className="text-gray-400 leading-relaxed text-base sm:text-lg">
+                    Submit your best 5 cards to the weekly league. Your score is driven by real-world startup traction, news presence, and product launches.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative flex flex-col md:flex-row items-center justify-between group">
+              {/* Connector Dot */}
+              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#050507] border-2 border-[#A855F7]/40 items-center justify-center z-20 group-hover:border-[#A855F7] transition-all duration-500 group-hover:shadow-[0_0_20px_#A855F7]">
+                <div className="w-2 h-2 rounded-full bg-[#A855F7] group-hover:scale-150 transition-transform duration-500"></div>
+              </div>
+
+              {/* Text Left */}
+              <div className="w-full md:w-[45%] flex justify-end mb-8 md:mb-0 order-2 md:order-1 px-4 md:px-0">
+                <div className="md:pr-12 text-center md:text-right w-full">
+                  <div className="inline-block text-8xl font-black text-white/[0.03] -mb-8 select-none">03</div>
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#DFB9FF] transition-all duration-300">Reap the Rewards</h3>
+                  <p className="text-gray-400 leading-relaxed text-base sm:text-lg">
+                    Top the leaderboard and instantly claim your ETH from the prize pool. Smart contracts on the Rise blockchain handle payouts securely string.
+                  </p>
+                </div>
+              </div>
+
+              {/* Visual Card Right */}
+              <div className="w-full md:w-[45%] order-1 md:order-2 px-4 md:px-0 flex justify-center md:justify-start">
+                <div className="relative w-full max-w-sm aspect-video rounded-3xl p-[1px] overflow-hidden group-hover:scale-[1.02] transition-transform duration-500">
+                  <div className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent_0_340deg,#A855F7_360deg)] animate-[spin_4s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-[1px] bg-[#0A0A0E] rounded-[23px] z-10"></div>
+                  <div className="relative z-20 w-full h-full p-8 border border-white/5 rounded-3xl bg-gradient-to-br from-white/[0.03] to-transparent flex items-center justify-center backdrop-blur-sm overflow-hidden">
+                    <div className="relative">
+                      <div className="w-20 h-20 rounded-full bg-[#A855F7]/20 blur-xl absolute inset-0 group-hover:bg-[#A855F7]/40 transition-colors"></div>
+                      <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-[#DFB9FF] relative z-10 animate-[bounce_3s_infinite]">ETH</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
