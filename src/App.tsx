@@ -138,12 +138,6 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const [show3dModel, setShow3dModel] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setShow3dModel(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -353,32 +347,22 @@ export default function App() {
               <div className="w-full md:w-[45%] order-1 md:order-2 px-4 md:px-0 flex justify-center md:justify-start">
                 <div className="relative w-full max-w-sm h-[200px] sm:h-[300px] flex items-center justify-center group-hover:scale-[1.05] transition-transform duration-500 overflow-visible">
                   <div className="relative w-[500px] h-[600px] scale-[0.45] sm:scale-[0.55] z-20 flex items-center justify-center animate-[float_6s_ease-in-out_infinite]">
-                    {show3dModel ? (
-                      /* @ts-ignore */
-                      <model-viewer
-                        src="/card-pack.glb"
-                        environment-image="/env-city.hdr"
-                        auto-rotate="true"
-                        rotation-per-second="20deg"
-                        camera-controls="true"
-                        shadow-intensity="0"
-                        exposure="1.1"
-                        camera-orbit="0deg 75deg 7m"
-                        field-of-view="25deg"
-                        disable-zoom="true"
-                        disable-pan="true"
-                        interaction-prompt="none"
-                        style={{ width: '100%', height: '100%', backgroundColor: 'transparent', outline: 'none' }}
-                      >
-                        <div slot="poster" className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <div className="w-[250px] sm:w-[350px] h-[250px] sm:h-[350px] rounded-full bg-[#A855F7]/30 blur-[100px] animate-[pulse_3s_ease-in-out_infinite]"></div>
-                        </div>
-                      </model-viewer>
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="w-[250px] sm:w-[350px] h-[250px] sm:h-[350px] rounded-full bg-[#A855F7]/30 blur-[100px] animate-[pulse_3s_ease-in-out_infinite]"></div>
-                      </div>
-                    )}
+                    {/* @ts-ignore */}
+                    <model-viewer
+                      src="/card-pack.glb"
+                      environment-image="/env-city.hdr"
+                      auto-rotate="true"
+                      rotation-per-second="20deg"
+                      camera-controls="true"
+                      shadow-intensity="0"
+                      exposure="1.1"
+                      camera-orbit="0deg 75deg 7m"
+                      field-of-view="25deg"
+                      disable-zoom="true"
+                      disable-pan="true"
+                      interaction-prompt="none"
+                      style={{ width: '100%', height: '100%', backgroundColor: 'transparent', outline: 'none' }}
+                    ></model-viewer>
                   </div>
                 </div>
               </div>
