@@ -141,21 +141,21 @@ export default function App() {
         </div>
 
         {/* Right Column - Cards */}
-        <div className="relative h-[600px] flex items-center justify-center [perspective:2000px]">
+        <div className="relative h-[650px] flex items-center justify-center [perspective:2000px]">
           {/* Background Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#A855F7]/15 blur-[120px] rounded-full pointer-events-none"></div>
 
-          {/* Cards Container */}
-          <div className="relative w-full max-w-[280px] aspect-[3/4] [transform-style:preserve-3d] group">
+          {/* Cards Container — 591:1004 ≈ 3:5 ratio */}
+          <div className="relative w-[260px] h-[442px] [transform-style:preserve-3d] group">
 
             {/* Card 3 (Back left) - Lovable */}
-            <img src="/images/lovable.png" alt="Lovable" className="absolute inset-0 w-full h-full object-cover rounded-[24px] shadow-2xl transition-all duration-500 transform -rotate-12 -translate-x-20 translate-y-8 scale-90 group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-100 cursor-pointer" />
+            <img src="/images/lovable.png" alt="Lovable" className="absolute inset-0 w-full h-full rounded-[24px] shadow-2xl transition-all duration-500 transform -rotate-12 -translate-x-20 translate-y-8 scale-90 group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-100 cursor-pointer" />
 
             {/* Card 2 (Back right) - Cursor */}
-            <img src="/images/cursor.png" alt="Cursor" className="absolute inset-0 w-full h-full object-cover rounded-[24px] shadow-2xl transition-all duration-500 transform rotate-12 translate-x-20 translate-y-4 scale-95 group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-100 cursor-pointer" />
+            <img src="/images/cursor.png" alt="Cursor" className="absolute inset-0 w-full h-full rounded-[24px] shadow-2xl transition-all duration-500 transform rotate-12 translate-x-20 translate-y-4 scale-95 group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-100 cursor-pointer" />
 
             {/* Card 1 (Front center) - OpenAI */}
-            <img src="/images/openai.png" alt="OpenAI" className="absolute inset-0 w-full h-full object-cover rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(168,85,247,0.2)] transition-all duration-500 transform z-10 group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-105 cursor-pointer" />
+            <img src="/images/openai.png" alt="OpenAI" className="absolute inset-0 w-full h-full rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(168,85,247,0.2)] transition-all duration-500 transform z-10 group-hover:opacity-30 hover:!opacity-100 hover:z-20 hover:-translate-y-4 hover:scale-105 cursor-pointer" />
 
           </div>
         </div>
@@ -412,8 +412,8 @@ export default function App() {
             { name: 'Anthropic', img: '/images/anthropic.png', rarity: 'Legendary' },
           ].map((card, i) => (
             <div key={i} className="bg-white/[0.02] backdrop-blur-xl border border-white/[0.08] rounded-[24px] p-4 hover:border-[#A855F7]/30 transition-colors group cursor-pointer">
-              <div className="aspect-[3/4] rounded-xl mb-4 relative overflow-hidden">
-                <img src={card.img} alt={card.name} className="w-full h-full object-cover rounded-xl" />
+              <div className="aspect-[3/5] rounded-xl mb-4 relative overflow-hidden">
+                <img src={card.img} alt={card.name} className="w-full h-full rounded-xl" />
               </div>
               <div className="flex justify-between items-end">
                 <div>
