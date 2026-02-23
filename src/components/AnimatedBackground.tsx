@@ -34,10 +34,11 @@ export const AnimatedBackground = () => {
       const rows = Math.floor(canvas.height / spacingY);
 
       const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
+      // On mobile, shift the center up so it frames the text and doesn't overlap the cards at the bottom
+      const centerY = isMobile ? canvas.height * 0.3 : canvas.height / 2;
 
-      // Scale down the shape on mobile so it fits
-      const scale = isMobile ? 0.6 : 1;
+      // Scale down the shape on desktop
+      const scale = isMobile ? 1 : 1;
 
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
@@ -47,25 +48,41 @@ export const AnimatedBackground = () => {
           const dx = x - centerX;
           const dy = y - centerY;
 
-          // Infinity shape (Lemniscate approximation)
-          const radiusX = Math.min(canvas.width * 0.25, 350) * scale;
-          const radiusY = Math.min(canvas.height * 0.3, 250) * scale;
+          let val;
+          const thickness = isMobile ? 35 : 90;
 
-          // Distance to left and right centers
-          const dist1 = Math.sqrt(Math.pow(dx + radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
-          const dist2 = Math.sqrt(Math.pow(dx - radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
+          if (isMobile) {
+            // Elegant glowing Halo/Portal for mobile
+            const radius = Math.min(canvas.width * 0.38, 220);
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
-          const thickness = isMobile ? 70 : 90;
+            // Base ring distance
+            let ring = Math.abs(dist - radius);
 
-          const ring1 = Math.abs(dist1 - radiusY * 0.8);
-          const ring2 = Math.abs(dist2 - radiusY * 0.8);
+            // Subtle, organic waving effect
+            const angle = Math.atan2(dy, dx);
+            ring += Math.sin(angle * 3 + time * 0.8) * 12;
+            ring += Math.cos(angle * 5 - time * 0.5) * 8;
 
-          // Combine rings
-          let val = Math.min(ring1, ring2);
+            val = ring;
+          } else {
+            // Infinity shape (Lemniscate approximation) for desktop
+            const radiusX = Math.min(canvas.width * 0.25, 350) * scale;
+            const radiusY = Math.min(canvas.height * 0.3, 250) * scale;
 
-          // Add wave distortion
-          val += Math.sin(x * 0.01 + time) * 15;
-          val += Math.cos(y * 0.02 - time) * 15;
+            const dist1 = Math.sqrt(Math.pow(dx + radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
+            const dist2 = Math.sqrt(Math.pow(dx - radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
+
+            const ring1 = Math.abs(dist1 - radiusY * 0.8);
+            const ring2 = Math.abs(dist2 - radiusY * 0.8);
+
+            // Combine rings
+            val = Math.min(ring1, ring2);
+
+            // Add wave distortion
+            val += Math.sin(x * 0.01 + time) * 15;
+            val += Math.cos(y * 0.02 - time) * 15;
+          }
 
           let opacity = 0.03;
           let width = 2;
@@ -101,9 +118,9 @@ export const AnimatedBackground = () => {
 
           // Draw rounded dash
           if (ctx.roundRect) {
-            ctx.roundRect(x - width/2, y - height/2, width, height, height/2);
+            ctx.roundRect(x - width / 2, y - height / 2, width, height, height / 2);
           } else {
-            ctx.rect(x - width/2, y - height/2, width, height);
+            ctx.rect(x - width / 2, y - height / 2, width, height);
           }
           ctx.fill();
         }

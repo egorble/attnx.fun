@@ -132,10 +132,10 @@ export default function App() {
                 setLeaderboard(lb.data.slice(0, 3));
               }
             })
-            .catch(() => {});
+            .catch(() => { });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   // Countdown timer — endTime is Unix timestamp in seconds
@@ -177,7 +177,7 @@ export default function App() {
     <div className="min-h-screen bg-[#050507] text-white font-sans selection:bg-white/20 selection:text-white overflow-hidden relative scroll-smooth">
       {/* Global Background for lower sections */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:linear-gradient(to_bottom,transparent_10%,#000_40%,#000_100%)]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:linear-gradient(to_bottom,transparent_10%,#000_40%,#000_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_10%,#000_40%,#000_100%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_50%,#A855F7_0%,transparent_100%)] opacity-[0.04]"></div>
       </div>
 
@@ -186,30 +186,30 @@ export default function App() {
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50">
         <div className={`flex items-center py-3 sm:py-4 max-w-[1400px] mx-auto transition-all duration-500 ${navScrolled ? 'justify-center px-4' : 'justify-between px-4 sm:px-6 flex-row-reverse sm:flex-row'}`}>
-        <button onClick={() => scrollTo('hero')} className={`text-xl sm:text-2xl font-bold tracking-tighter transition-all duration-500 origin-right sm:origin-left ${navScrolled ? 'w-0 opacity-0 scale-75 pointer-events-none' : 'opacity-100 scale-100'}`}>Attention<span className="text-[#A855F7]">X</span></button>
+          <button onClick={() => scrollTo('hero')} className={`text-xl sm:text-2xl font-bold tracking-tighter transition-all duration-500 origin-right sm:origin-left ${navScrolled ? 'w-0 opacity-0 scale-75 pointer-events-none' : 'opacity-100 scale-100'}`}>Attention<span className="text-[#A855F7]">X</span></button>
 
-        <div ref={navContainerRef} className="hidden md:flex items-center gap-8 bg-white/[0.03] backdrop-blur-xl px-8 py-3.5 rounded-2xl border border-white/[0.08] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] relative">
-          {NAV_SECTIONS.map((id) => (
-            <button
-              key={id}
-              ref={(el) => { navLinkRefs.current[id] = el; }}
-              onClick={() => scrollTo(id)}
-              className={`text-sm font-medium transition-colors duration-300 ${activeSection === id ? 'text-white' : 'text-gray-400 hover:text-white'}`}
-            >
-              {NAV_LABELS[id]}
-            </button>
-          ))}
-          {/* Animated dot indicator */}
-          <span
-            className="absolute bottom-2 h-[5px] w-[5px] rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.5)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-            style={{ left: dotStyle.left, opacity: dotStyle.width ? 1 : 0 }}
-          />
-        </div>
+          <div ref={navContainerRef} className="hidden md:flex items-center gap-8 bg-white/[0.03] backdrop-blur-xl px-8 py-3.5 rounded-2xl border border-white/[0.08] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] relative">
+            {NAV_SECTIONS.map((id) => (
+              <button
+                key={id}
+                ref={(el) => { navLinkRefs.current[id] = el; }}
+                onClick={() => scrollTo(id)}
+                className={`text-sm font-medium transition-colors duration-300 ${activeSection === id ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+              >
+                {NAV_LABELS[id]}
+              </button>
+            ))}
+            {/* Animated dot indicator */}
+            <span
+              className="absolute bottom-2 h-[5px] w-[5px] rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.5)] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+              style={{ left: dotStyle.left, opacity: dotStyle.width ? 1 : 0 }}
+            />
+          </div>
 
-        <button onClick={() => scrollTo('waitlist')} className={`group relative bg-white text-black rounded-xl font-semibold text-xs sm:text-sm overflow-hidden transition-all duration-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:scale-105 origin-right hidden md:block cursor-pointer ${navScrolled ? 'md:w-0 md:px-0 md:py-0 md:opacity-0 md:scale-75 md:pointer-events-none' : 'md:px-7 md:py-2.5 md:opacity-100 md:scale-100'}`}>
-          <span className="relative z-10 whitespace-nowrap">Join Waitlist</span>
-          <div className="absolute inset-0 bg-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </button>
+          <button onClick={() => scrollTo('waitlist')} className={`group relative bg-white text-black rounded-xl font-semibold text-xs sm:text-sm overflow-hidden transition-all duration-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:scale-105 origin-right hidden md:block cursor-pointer ${navScrolled ? 'md:w-0 md:px-0 md:py-0 md:opacity-0 md:scale-75 md:pointer-events-none' : 'md:px-7 md:py-2.5 md:opacity-100 md:scale-100'}`}>
+            <span className="relative z-10 whitespace-nowrap">Join Waitlist</span>
+            <div className="absolute inset-0 bg-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
         </div>
       </nav>
 
@@ -571,8 +571,8 @@ export default function App() {
                   key={tab.id}
                   onClick={() => scrollTo(tab.id)}
                   className={`flex flex-col items-center justify-center px-3 py-1.5 rounded-2xl transition-all duration-300 ${isActive
-                      ? 'bg-white/[0.1] text-white'
-                      : 'text-gray-500 active:scale-95'
+                    ? 'bg-white/[0.1] text-white'
+                    : 'text-gray-500 active:scale-95'
                     }`}
                 >
                   <tab.icon className="w-5 h-5" weight={isActive ? 'fill' : 'regular'} />
