@@ -18,46 +18,51 @@ export const AnimatedBackground = () => {
       canvas.width = container.clientWidth;
       canvas.height = container.clientHeight;
     };
-    
+
     window.addEventListener('resize', resize);
     resize();
 
     const draw = () => {
       time += 0.015;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const spacingX = 14;
-      const spacingY = 14;
+
+      // On small screens use wider spacing for performance + zoom-out feel
+      const isMobile = canvas.width < 768;
+      const spacingX = isMobile ? 18 : 14;
+      const spacingY = isMobile ? 18 : 14;
       const cols = Math.floor(canvas.width / spacingX);
       const rows = Math.floor(canvas.height / spacingY);
-      
+
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
+
+      // Scale down the shape on mobile so it fits
+      const scale = isMobile ? 0.6 : 1;
 
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           const x = i * spacingX + spacingX / 2;
           const y = j * spacingY + spacingY / 2;
-          
+
           const dx = x - centerX;
           const dy = y - centerY;
-          
+
           // Infinity shape (Lemniscate approximation)
-          const radiusX = Math.min(canvas.width * 0.25, 350);
-          const radiusY = Math.min(canvas.height * 0.3, 250);
-          
+          const radiusX = Math.min(canvas.width * 0.25, 350) * scale;
+          const radiusY = Math.min(canvas.height * 0.3, 250) * scale;
+
           // Distance to left and right centers
           const dist1 = Math.sqrt(Math.pow(dx + radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
           const dist2 = Math.sqrt(Math.pow(dx - radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
-          
-          const thickness = 90;
-          
+
+          const thickness = isMobile ? 70 : 90;
+
           const ring1 = Math.abs(dist1 - radiusY * 0.8);
           const ring2 = Math.abs(dist2 - radiusY * 0.8);
-          
+
           // Combine rings
           let val = Math.min(ring1, ring2);
-          
+
           // Add wave distortion
           val += Math.sin(x * 0.01 + time) * 15;
           val += Math.cos(y * 0.02 - time) * 15;
@@ -68,9 +73,9 @@ export const AnimatedBackground = () => {
           let isHighlighted = false;
 
           if (val < thickness) {
-            const intensity = Math.pow(1 - (val / thickness), 1.5); // non-linear falloff
+            const intensity = Math.pow(1 - (val / thickness), 1.5);
             opacity = 0.1 + intensity * 0.6;
-            width = 3 + intensity * 14;
+            width = 3 + intensity * (isMobile ? 10 : 14);
             isHighlighted = true;
           }
 
@@ -78,22 +83,22 @@ export const AnimatedBackground = () => {
           const scanWave = Math.sin(x * 0.008 - time * 2) * Math.cos(y * 0.008 + time);
           if (isHighlighted && scanWave > 0) {
             opacity += scanWave * 0.5;
-            width += scanWave * 10;
+            width += scanWave * (isMobile ? 6 : 10);
           }
 
           ctx.beginPath();
-          
+
           if (isHighlighted) {
-            // Mix purple and blue based on position and time
+            // Subtle mix between cool white and soft lavender
             const mix = (Math.sin(x * 0.002 + time) + 1) / 2;
-            const r = Math.round(168 + mix * (59 - 168));
-            const g = Math.round(85 + mix * (130 - 85));
-            const b = Math.round(247 + mix * (246 - 247));
-            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+            const r = Math.round(200 + mix * (160 - 200));
+            const g = Math.round(200 + mix * (170 - 200));
+            const b = Math.round(220 + mix * (230 - 220));
+            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${opacity * 0.6})`;
           } else {
             ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
           }
-          
+
           // Draw rounded dash
           if (ctx.roundRect) {
             ctx.roundRect(x - width/2, y - height/2, width, height, height/2);
@@ -103,7 +108,7 @@ export const AnimatedBackground = () => {
           ctx.fill();
         }
       }
-      
+
       animationFrameId = requestAnimationFrame(draw);
     };
 
@@ -116,16 +121,16 @@ export const AnimatedBackground = () => {
   }, []);
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="absolute top-0 left-0 w-full h-[120vh] pointer-events-none z-0"
-      style={{ 
-        maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', 
-        WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)' 
+      style={{
+        maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
       }}
     >
-      <canvas 
-        ref={canvasRef} 
+      <canvas
+        ref={canvasRef}
         className="w-full h-full block"
       />
     </div>
