@@ -2,6 +2,26 @@ import { Trophy, TrendUp, Shield, MagicWand, House, Lightbulb, Storefront, Envel
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { AnimatedBackground } from './components/AnimatedBackground';
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'model-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+        src?: string;
+        alt?: string;
+        'auto-rotate'?: boolean;
+        'camera-controls'?: boolean;
+        'shadow-intensity'?: string | number;
+        exposure?: string | number;
+        'environment-image'?: string;
+        'disable-zoom'?: boolean;
+        'camera-target'?: string;
+        'camera-orbit'?: string;
+        'field-of-view'?: string;
+      };
+    }
+  }
+}
+
 const API_BASE = 'https://app.attnx.fun';
 
 interface TournamentData {
@@ -242,7 +262,7 @@ export default function App() {
       <main id="hero" className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-20 sm:pt-20 pb-12 sm:pb-6 min-h-[100dvh] flex flex-col lg:grid lg:grid-cols-2 gap-8 sm:gap-6 lg:gap-12 lg:items-end relative z-10">
         <div className="absolute top-0 left-[-10%] w-[40%] h-[80%] rounded-full bg-[#A855F7]/8 blur-[100px] md:blur-[150px] pointer-events-none"></div>
         {/* Left Column */}
-        <div className="space-y-4 sm:space-y-6 shrink-0 mt-4 sm:mt-0">
+        <div className="space-y-4 sm:space-y-6 shrink-0 mt-auto mb-10 lg:mb-0 lg:mt-0 text-left flex flex-col items-start">
           {/* Trust Badge — hidden on mobile */}
           <div className="hidden sm:inline-flex items-center gap-3 bg-white/[0.03] backdrop-blur-xl p-1.5 pr-5 rounded-xl border border-white/[0.08] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)]">
             <div className="bg-white text-black px-4 py-1.5 rounded-lg text-xs font-bold">
@@ -259,20 +279,25 @@ export default function App() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-[36px] sm:text-[48px] md:text-[56px] lg:text-[72px] font-bold leading-[1.05] tracking-tight">
-            The Ultimate <br />
-            Startup Fantasy <br />
+          <h1 className="text-[40px] sm:text-[48px] md:text-[56px] lg:text-[72px] font-bold leading-[1.05] tracking-tight">
+            The Ultimate <br className="hidden lg:block" />
+            Startup Fantasy <br className="hidden lg:block" />
             Trading Game
           </h1>
 
           {/* Subheadline */}
           <p className="text-gray-400 text-base sm:text-lg max-w-xl leading-relaxed">
-            Trade cards of top AI and YC startups. Build your portfolio, compete in weekly tournaments, and win real rewards based on real-world traction and hype.
+            <span className="sm:hidden">
+              Trade cards of top AI & YC startups. Build your portfolio, compete, and win real rewards.
+            </span>
+            <span className="hidden sm:inline">
+              Trade cards of top AI and YC startups. Build your portfolio, compete in weekly tournaments, and win real rewards based on real-world traction and hype.
+            </span>
           </p>
 
           {/* Button */}
-          <div className="pt-2 sm:pt-0">
-            <button onClick={() => scrollTo('waitlist')} className="group relative inline-flex items-center gap-3 bg-white text-black px-7 sm:px-8 py-3 sm:py-3.5 rounded-2xl font-bold text-sm sm:text-base overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:scale-[1.03] cursor-pointer">
+          <div className="pt-4 sm:pt-0">
+            <button onClick={() => scrollTo('waitlist')} className="group relative inline-flex items-center gap-3 bg-white text-black px-8 sm:px-8 py-4 sm:py-3.5 rounded-2xl font-bold text-base sm:text-base overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:scale-[1.03] cursor-pointer">
               <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-[-4px]">Join the Waitlist</span>
               <svg className="relative z-10 w-5 h-5 transition-all duration-300 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
               <div className="absolute inset-0 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -281,7 +306,7 @@ export default function App() {
         </div>
 
         {/* Right Column - Cards */}
-        <div className="flex-1 flex relative mt-8 sm:mt-0 min-h-[300px] sm:min-h-[360px] lg:min-h-[560px] items-center sm:items-end justify-center [perspective:2000px]">
+        <div className="hidden lg:flex flex-1 relative mt-8 sm:mt-0 min-h-[300px] sm:min-h-[360px] lg:min-h-[560px] items-center sm:items-end justify-center [perspective:2000px]">
           {/* Background Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[350px] lg:w-[450px] h-[280px] sm:h-[350px] lg:h-[450px] bg-[#A855F7]/10 blur-[80px] sm:blur-[100px] lg:blur-[120px] rounded-full pointer-events-none"></div>
 

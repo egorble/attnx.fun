@@ -23,13 +23,14 @@ export const AnimatedBackground = () => {
     resize();
 
     const draw = () => {
-      time += 0.015;
+      // Reduced speed by 20% (was 0.02, now 0.016)
+      time += 0.016;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // On small screens use wider spacing for performance + zoom-out feel
+      // On small screens use tighter spacing for a high-res, smooth appearance
       const isMobile = canvas.width < 768;
-      const spacingX = isMobile ? 18 : 14;
-      const spacingY = isMobile ? 18 : 14;
+      const spacingX = isMobile ? 10 : 14;
+      const spacingY = isMobile ? 10 : 14;
       const cols = Math.floor(canvas.width / spacingX);
       const rows = Math.floor(canvas.height / spacingY);
 
@@ -40,6 +41,10 @@ export const AnimatedBackground = () => {
       // Scale down the shape on desktop
       const scale = isMobile ? 1 : 1;
 
+      // Gentleman breathing thickness
+      const baseThickness = isMobile ? 35 : 90;
+      const thickness = baseThickness + Math.sin(time * 0.9) * 15;
+
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           const x = i * spacingX + spacingX / 2;
@@ -49,26 +54,25 @@ export const AnimatedBackground = () => {
           const dy = y - centerY;
 
           let val;
-          const thickness = isMobile ? 35 : 90;
 
           if (isMobile) {
-            // Elegant glowing Halo/Portal for mobile
-            const radius = Math.min(canvas.width * 0.38, 220);
+            // Elegant, smooth liquid circle for mobile
+            const baseCircleRadius = Math.min(canvas.width * 0.4, 250);
             const dist = Math.sqrt(dx * dx + dy * dy);
-
-            // Base ring distance
-            let ring = Math.abs(dist - radius);
-
-            // Subtle, organic waving effect
             const angle = Math.atan2(dy, dx);
-            ring += Math.sin(angle * 3 + time * 0.8) * 12;
-            ring += Math.cos(angle * 5 - time * 0.5) * 8;
 
-            val = ring;
+            // Create a fluid, undulating radius
+            let dynamicRadius = baseCircleRadius;
+            dynamicRadius += Math.sin(angle * 3 + time * 1.2) * 15;
+            dynamicRadius += Math.cos(angle * 5 - time * 0.8) * 10;
+            dynamicRadius += Math.sin(angle * 2 - time * 1.5) * 8; // Extra layer of organic movement
+
+            // The val is the distance from this dynamic boundary
+            val = Math.abs(dist - dynamicRadius);
           } else {
-            // Infinity shape (Lemniscate approximation) for desktop
-            const radiusX = Math.min(canvas.width * 0.25, 350) * scale;
-            const radiusY = Math.min(canvas.height * 0.3, 250) * scale;
+            // Infinity shape (Lemniscate approximation)
+            let radiusX = Math.min(canvas.width * 0.25, 350) * scale;
+            let radiusY = Math.min(canvas.height * 0.3, 250) * scale;
 
             const dist1 = Math.sqrt(Math.pow(dx + radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
             const dist2 = Math.sqrt(Math.pow(dx - radiusX * 0.7, 2) / 1.5 + Math.pow(dy, 2));
@@ -76,42 +80,42 @@ export const AnimatedBackground = () => {
             const ring1 = Math.abs(dist1 - radiusY * 0.8);
             const ring2 = Math.abs(dist2 - radiusY * 0.8);
 
-            // Combine rings
             val = Math.min(ring1, ring2);
 
-            // Add wave distortion
-            val += Math.sin(x * 0.01 + time) * 15;
-            val += Math.cos(y * 0.02 - time) * 15;
+            // Moderate wave distortion
+            val += Math.sin(x * 0.01 + time * 1.2) * 18;
+            val += Math.cos(y * 0.02 - time * 1.1) * 18;
           }
 
-          let opacity = 0.03;
+          let opacity = 0.02;
           let width = 2;
           const height = 2;
           let isHighlighted = false;
 
           if (val < thickness) {
-            const intensity = Math.pow(1 - (val / thickness), 1.5);
-            opacity = 0.1 + intensity * 0.6;
-            width = 3 + intensity * (isMobile ? 10 : 14);
+            const intensity = Math.pow(1 - (val / thickness), 1.4);
+            // More gentle intensity curve
+            opacity = 0.1 + intensity * 0.65;
+            width = 3 + intensity * (isMobile ? 11 : 16);
             isHighlighted = true;
           }
 
-          // Scanning wave
-          const scanWave = Math.sin(x * 0.008 - time * 2) * Math.cos(y * 0.008 + time);
+          // Fast scanning wave across the grid (softened)
+          const scanWave = Math.sin(x * 0.006 - time * 2) * Math.cos(y * 0.006 + time * 1.5);
           if (isHighlighted && scanWave > 0) {
             opacity += scanWave * 0.5;
-            width += scanWave * (isMobile ? 6 : 10);
+            width += scanWave * (isMobile ? 7 : 12);
           }
 
           ctx.beginPath();
 
           if (isHighlighted) {
-            // Subtle mix between cool white and soft lavender
+            // Beautiful blend between cool white and a richer lavender/purple
             const mix = (Math.sin(x * 0.002 + time) + 1) / 2;
-            const r = Math.round(200 + mix * (160 - 200));
-            const g = Math.round(200 + mix * (170 - 200));
-            const b = Math.round(220 + mix * (230 - 220));
-            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${opacity * 0.6})`;
+            const r = Math.round(255 - mix * (255 - 190));
+            const g = Math.round(255 - mix * (255 - 140));
+            const b = 255; // Always strong blueish/purple tint
+            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${opacity * 0.8})`;
           } else {
             ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
           }
